@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+						
+	<import resource="stockContext.xml"/>
+						
+	<bean name="service" class="com.jpmorgan.stocks.service.SuperSimpleStockService">
+		<constructor-arg name="entityManager" ref="entityManager"/>
+	</bean>
+
+	<bean name="entityManager" class="com.jpmorgan.stocks.entity.SuperSimpleStockEntityManager">
+		<constructor-arg name="stocks" ref="stockList"/>
+	</bean>
+	
+</beans>

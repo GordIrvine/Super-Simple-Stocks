@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import com.jpmorgan.stocks.model.stock.StockSymbolNotRecognisedException;
+import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
 import com.jpmorgan.stocks.model.trade.TradeTypeNotRecognisedException;
 
 public interface StockService {
@@ -16,7 +17,7 @@ public interface StockService {
 	 * @return The dividend yield.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException;
+	public abstract BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException, UnknownStockSymbolException;
 
 	/**
 	 * Calculates the P/E ratio for any given stock based on the stock price.

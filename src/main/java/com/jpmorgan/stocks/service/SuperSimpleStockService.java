@@ -1,11 +1,18 @@
 package com.jpmorgan.stocks.service;
 
+import com.jpmorgan.stocks.entity.StockEntityManager;
+import com.jpmorgan.stocks.model.stock.Stock;
+import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class SuperSimpleStockService implements StockService {
 
-	public SuperSimpleStockService() {		
+	private final StockEntityManager stockManager;
+
+	public SuperSimpleStockService(final StockEntityManager entityManager) {
+		this.stockManager = entityManager;
 	}
 	
 	/**
@@ -13,7 +20,8 @@ public class SuperSimpleStockService implements StockService {
 	 */
 	@Override
 	public BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException {
-		//TODO ImplementMe
+		final Stock stock = this.stockManager.getStock(stockSymbol);
+		return stock.getDividendYield(price);
 	}
 	
 	/**
