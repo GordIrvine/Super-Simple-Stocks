@@ -11,7 +11,6 @@ public class CommonStock extends AbstractStock {
         super(stockSymbol, lastDividend, parValue);
     }
 
-    @Override
     public BigDecimal getDividendYield(final BigDecimal price) {
         validateDivisor(price);
         return this.getLastDividend().divide(price);

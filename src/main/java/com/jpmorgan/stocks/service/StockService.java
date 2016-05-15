@@ -3,9 +3,7 @@ package com.jpmorgan.stocks.service;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.jpmorgan.stocks.model.stock.StockSymbolNotRecognisedException;
 import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
-import com.jpmorgan.stocks.model.trade.TradeTypeNotRecognisedException;
 
 public interface StockService {
 
@@ -37,10 +35,9 @@ public interface StockService {
 	 * @param shareQuantity Number of shares to be traded.
 	 * @param tradeType The type of trade to be performed.
 	 * @param price The price the share is to be traded at.
-	 * @throws UnknownTradeTypeException If an unknown trade type is passed into the method.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract void recordTrade(final String stockSymbol, final Date timestamp, final int shareQuantity, final String tradeType, final BigDecimal price) throws UnknownTradeTypeException, UnknownStockSymbolException;
+	public abstract void recordTrade(final String stockSymbol, final Date timestamp, final int shareQuantity, final String tradeType, final BigDecimal price) throws  UnknownStockSymbolException;
 	
 	/**
 	 * Calculates the volume weighted stock price on any stocks of a specific type that have been performed in the last 15 minutes.

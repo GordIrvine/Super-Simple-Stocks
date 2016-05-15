@@ -29,14 +29,15 @@ public class SuperSimpleStockService implements StockService {
 	 */
 	@Override
 	public BigDecimal getPERatio(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException {
-		//TODO ImplementMe
+		final Stock stock = this.stockManager.getStock(stockSymbol);
+        return null;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void recordTrade(String stockSymbol, Date timestamp, int shareQuantity, String tradeType, BigDecimal price) throws UnknownTradeTypeException, UnknownStockSymbolException {
+	public void recordTrade(String stockSymbol, Date timestamp, int shareQuantity, String tradeType, BigDecimal price) throws UnknownStockSymbolException {
 		//TODO ImplementMe
 	}
 	
@@ -45,7 +46,8 @@ public class SuperSimpleStockService implements StockService {
 	 */
 	@Override
 	public BigDecimal getVolumeWeightedStockPrice(final String stockSymbol) throws UnknownStockSymbolException {
-		//TODO ImplimentMe
+		//TODO ImplementMe
+        return null;
 	}
 	
 	/**
@@ -53,7 +55,8 @@ public class SuperSimpleStockService implements StockService {
 	 */
 	@Override
 	public BigDecimal getAllShareIndex() {
-		//TODO ImplimentMe
+        return null;
+		//TODO ImplementMe
 	}
 
 }

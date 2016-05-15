@@ -14,8 +14,6 @@ public class PreferredStock extends AbstractStock {
         this.fixedDividend = fixedDividend;
     }
 
-
-    @Override
     public BigDecimal getDividendYield(BigDecimal price) {
         validateDivisor(price);
         return (this.fixedDividend.multiply(this.getParValue()).divide(price));

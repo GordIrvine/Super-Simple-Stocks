@@ -9,5 +9,7 @@ public interface Stock {
 
     BigDecimal getDividendYield(final BigDecimal price);
 
+    BigDecimal getPERatio(final BigDecimal price);
+
     boolean isStockSymbol(final String stockSymbol);
 }

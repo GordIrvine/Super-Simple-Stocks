@@ -27,17 +27,23 @@ public abstract class AbstractStock implements Stock {
         return parValue;
     }
 
-    @Override
+
     public final boolean isStockSymbol(final String stockSymbol) {
         return this.stockSymbol.equals(stockSymbol);
     }
 
+
+    public final BigDecimal getPERatio(final BigDecimal price) {
+        validateDivisor(this.lastDividend);
+        return price.divide(this.getDividendYield(price));
+    }
+
     protected final void validateDivisor(final BigDecimal value) {
-        if(value.compareTo(BigDecimal.ZERO) == 0) {
-            throw new IllegalArgumentException(DIVIDE_BY_ZERO_EXCEPTION_MESSAGE);
-        }
         if(value == null) {
             throw new IllegalArgumentException(DIVIDE_BY_NULL_EXCEPTION_MESSAGE);
+        }
+        if(value.compareTo(BigDecimal.ZERO) == 0) {
+            throw new IllegalArgumentException(DIVIDE_BY_ZERO_EXCEPTION_MESSAGE);
         }
     }
 }
