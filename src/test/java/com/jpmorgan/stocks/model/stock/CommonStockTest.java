@@ -39,4 +39,27 @@ public class CommonStockTest {
         stock.getDividendYield(null);
     }
 
+    @Test
+    public void getPERatio_Dividend_Yield_2_Price_5_Returns_Correct_Yield() {
+        BigDecimal expectedRatio = new BigDecimal(2.5);
+        BigDecimal price = new BigDecimal(5);
+        Stock stock = new CommonStock("TEA", BigDecimal.TEN, BigDecimal.ZERO);
+        assertEquals("Calculated PE Ratio does not match expected", expectedRatio, stock.getPERatio(price));
+    }
+
+    @Test
+    public void getPERatio_Price_Zero_Throws_Illegal_Argument() {
+        Stock stock = new CommonStock("TEA", BigDecimal.TEN, BigDecimal.ZERO);
+        exception.expect(IllegalArgumentException.class);
+        stock.getPERatio(BigDecimal.ZERO);
+
+    }
+
+    @Test
+    public void getPERatio_Price_Null_Throws_Illegal_Argument() {
+        Stock stock = new CommonStock("TEA", BigDecimal.TEN, BigDecimal.ZERO);
+        exception.expect(IllegalArgumentException.class);
+        stock.getPERatio(null);
+    }
+
 }

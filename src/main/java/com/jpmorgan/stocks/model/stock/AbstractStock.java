@@ -34,7 +34,7 @@ public abstract class AbstractStock implements Stock {
 
 
     public final BigDecimal getPERatio(final BigDecimal price) {
-        validateDivisor(this.lastDividend);
+        validateDivisor(price);
         return price.divide(this.getDividendYield(price));
     }
 
