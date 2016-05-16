@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 /**
  * Created by IRVINEG on 16/05/2016.
+ * Requires handling for unknown trade types
  */
 public enum TradeType {
 
