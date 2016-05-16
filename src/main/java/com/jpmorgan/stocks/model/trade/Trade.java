@@ -37,6 +37,7 @@ public class Trade {
     }
 
     public BigDecimal getTotalTradedPrice() {
-        return tradedPrice.multiply(BigDecimal.valueOf(shareQuantity));
+        BigDecimal totalTradedPrice = tradedPrice.multiply(BigDecimal.valueOf(shareQuantity));
+        return totalTradedPrice;
     }
 }
