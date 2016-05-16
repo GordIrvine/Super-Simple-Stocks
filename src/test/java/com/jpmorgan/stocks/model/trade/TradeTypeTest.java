@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by IRVINEG on 16/05/2016.

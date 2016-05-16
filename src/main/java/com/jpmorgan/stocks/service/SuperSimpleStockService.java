@@ -3,22 +3,26 @@ package com.jpmorgan.stocks.service;
 import com.jpmorgan.stocks.entity.StockEntityManager;
 import com.jpmorgan.stocks.model.stock.Stock;
 import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
+import com.jpmorgan.stocks.model.trade.Trade;
+import com.jpmorgan.stocks.model.trade.TradeType;
+import org.apache.commons.math3.stat.descriptive.moment.GeometricMean;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class SuperSimpleStockService implements StockService {
+class SuperSimpleStockService implements StockService {
 
 	private final StockEntityManager stockManager;
 
-	public SuperSimpleStockService(final StockEntityManager entityManager) {
+	SuperSimpleStockService(final StockEntityManager entityManager) {
 		this.stockManager = entityManager;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException {
 		final Stock stock = this.stockManager.getStock(stockSymbol);
 		return stock.getDividendYield(price);
@@ -27,36 +31,53 @@ public class SuperSimpleStockService implements StockService {
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public BigDecimal getPERatio(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException {
 		final Stock stock = this.stockManager.getStock(stockSymbol);
-        return null;
+        return stock.getPERatio(price);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public void recordTrade(String stockSymbol, Date timestamp, int shareQuantity, String tradeType, BigDecimal price) throws UnknownStockSymbolException {
-		//TODO ImplementMe
+		final Stock stock = this.stockManager.getStock(stockSymbol);
+		final Trade trade = new Trade(timestamp, shareQuantity, TradeType.valueOf(tradeType), price);
+		stock.recordTrade(trade);
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public BigDecimal getVolumeWeightedStockPrice(final String stockSymbol) throws UnknownStockSymbolException {
-		//TODO ImplementMe
-        return null;
+		final Stock stock = this.stockManager.getStock(stockSymbol);
+		return stock.getVolumeWeightedStockPriceOfPast15Minutes();
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
-	public BigDecimal getAllShareIndex() {
-        return null;
-		//TODO ImplementMe
+	public BigDecimal getGBCEAllShareIndex() {
+        List<Stock> stocks = this.stockManager.getStocks();
+		List<BigDecimal> weightedPrices = new ArrayList<BigDecimal>();
+		for(Stock stock : stocks) {
+			BigDecimal weightedPrice = stock.getVolumeWeightedStockPriceForAllTrades();
+			if(weightedPrice.compareTo(BigDecimal.ZERO) != 0) {
+				weightedPrices.add(weightedPrice);
+			}
+		}
+		if(weightedPrices.size() > 0) {
+			return getGeometricMean(weightedPrices);
+		}
+		return BigDecimal.ZERO;
+	}
+
+	private BigDecimal getGeometricMean(List<BigDecimal> weightedPrices) {
+		final double[] prices = new double[weightedPrices.size()];
+		for(int i = 0; i < weightedPrices.size(); i++) {
+			prices[i] = weightedPrices.get(i).doubleValue();
+		}
+		final GeometricMean mean = new GeometricMean();
+		return BigDecimal.valueOf(mean.evaluate(prices));
 	}
 
 }

@@ -21,4 +21,6 @@ public interface Stock {
     List<Trade> getTrades();
 
     BigDecimal getVolumeWeightedStockPriceOfPast15Minutes();
+
+    BigDecimal getVolumeWeightedStockPriceForAllTrades();
 }

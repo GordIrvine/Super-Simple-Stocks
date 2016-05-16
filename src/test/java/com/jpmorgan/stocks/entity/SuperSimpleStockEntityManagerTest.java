@@ -47,5 +47,4 @@ public class SuperSimpleStockEntityManagerTest {
         exception.expect(UnknownStockSymbolException.class);
         entityManager.getStock("TEA");
     }
-
 }

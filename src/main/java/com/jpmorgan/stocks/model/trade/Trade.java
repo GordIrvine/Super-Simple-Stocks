@@ -20,7 +20,7 @@ public class Trade {
         this.tradedPrice = price.multiply(tradeType.getTradeTypeModifier());
     }
 
-    public BigDecimal getTradedPrice() {
+    BigDecimal getTradedPrice() {
         return tradedPrice;
     }
 
@@ -28,7 +28,7 @@ public class Trade {
         return shareQuantity;
     }
 
-    public TradeType getTradeType() {
+    TradeType getTradeType() {
         return tradeType;
     }
 
@@ -37,7 +37,6 @@ public class Trade {
     }
 
     public BigDecimal getTotalTradedPrice() {
-        BigDecimal totalTradedPrice = tradedPrice.multiply(BigDecimal.valueOf(shareQuantity));
-        return totalTradedPrice;
+        return tradedPrice.multiply(BigDecimal.valueOf(shareQuantity));
     }
 }

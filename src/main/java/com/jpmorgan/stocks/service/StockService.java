@@ -1,11 +1,11 @@
 package com.jpmorgan.stocks.service;
 
+import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.jpmorgan.stocks.model.stock.UnknownStockSymbolException;
-
-public interface StockService {
+interface StockService {
 
 	/**
 	 * Calculates the dividend yield for any given stock based on the stock price
@@ -15,7 +15,7 @@ public interface StockService {
 	 * @return The dividend yield.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException, UnknownStockSymbolException;
+	BigDecimal getDividendYield(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException;
 
 	/**
 	 * Calculates the P/E ratio for any given stock based on the stock price.
@@ -25,7 +25,7 @@ public interface StockService {
 	 * @return The PE ratio.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract BigDecimal getPERatio(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException;
+	BigDecimal getPERatio(final String stockSymbol, final BigDecimal price) throws UnknownStockSymbolException;
 	
 	/**
 	 * Records a new Trade for the given stock symbol and the specific trade details provided
@@ -37,7 +37,7 @@ public interface StockService {
 	 * @param price The price the share is to be traded at.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract void recordTrade(final String stockSymbol, final Date timestamp, final int shareQuantity, final String tradeType, final BigDecimal price) throws  UnknownStockSymbolException;
+	void recordTrade(final String stockSymbol, final Date timestamp, final int shareQuantity, final String tradeType, final BigDecimal price) throws  UnknownStockSymbolException;
 	
 	/**
 	 * Calculates the volume weighted stock price on any stocks of a specific type that have been performed in the last 15 minutes.
@@ -46,12 +46,12 @@ public interface StockService {
 	 * @return The volume weighted stock price.
 	 * @throws UnknownStockSymbolException If an unknown stock symbol is passed into the method.
 	 */
-	public abstract BigDecimal getVolumeWeightedStockPrice(final String stockSymbol) throws UnknownStockSymbolException;
+	BigDecimal getVolumeWeightedStockPrice(final String stockSymbol) throws UnknownStockSymbolException;
 	
 	/**
 	 * Calculates the GBCE all share index.
 	 * 
 	 * @return The GBCE all share index.
 	 */
-	public abstract BigDecimal getAllShareIndex(); 
+	BigDecimal getGBCEAllShareIndex();
 }

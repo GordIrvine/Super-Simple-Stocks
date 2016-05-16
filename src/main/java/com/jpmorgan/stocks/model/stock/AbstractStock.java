@@ -1,18 +1,18 @@
 package com.jpmorgan.stocks.model.stock;
 
 import com.jpmorgan.stocks.model.trade.Trade;
-import sun.util.resources.cldr.ar.CalendarData_ar_BH;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
+
+import static java.math.BigDecimal.ROUND_HALF_DOWN;
 
 /**
  * Created by IRVINEG on 13/05/2016.
  */
-public abstract class AbstractStock implements Stock {
+abstract class AbstractStock implements Stock {
 
     private static final String DIVIDE_BY_ZERO_EXCEPTION_MESSAGE = "Divisor must not be equal to 0";
     private static final String DIVIDE_BY_NULL_EXCEPTION_MESSAGE = "Divisor cannot be null";
@@ -22,7 +22,7 @@ public abstract class AbstractStock implements Stock {
 
     private final List<Trade> trades = new ArrayList<Trade>();
 
-    public AbstractStock(final String stockSymbol, final BigDecimal lastDividend, final BigDecimal parValue) {
+    AbstractStock(final String stockSymbol, final BigDecimal lastDividend, final BigDecimal parValue) {
         this.stockSymbol = stockSymbol;
         this.lastDividend = lastDividend;
         this.parValue = parValue;
@@ -46,7 +46,7 @@ public abstract class AbstractStock implements Stock {
 
     public final BigDecimal getPERatio(final BigDecimal price) {
         validateDivisor(price);
-        return price.divide(this.getDividendYield(price));
+        return price.divide(this.getDividendYield(price), ROUND_HALF_DOWN);
     }
 
     public void recordTrade(Trade trade) {
@@ -62,7 +62,21 @@ public abstract class AbstractStock implements Stock {
             totalShareQuantity += trade.getShareQuantity();
         }
         if(totalShareQuantity > 0) {
-            accumulatedSharePrice = accumulatedSharePrice.divide(BigDecimal.valueOf(totalShareQuantity));
+            accumulatedSharePrice = accumulatedSharePrice.divide(BigDecimal.valueOf(totalShareQuantity), ROUND_HALF_DOWN);
+            return accumulatedSharePrice;
+        }
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getVolumeWeightedStockPriceForAllTrades() {
+        BigDecimal accumulatedSharePrice = BigDecimal.ZERO;
+        int totalShareQuantity = 0;
+        for (Trade trade : this.trades) {
+            accumulatedSharePrice = accumulatedSharePrice.add(trade.getTotalTradedPrice());
+            totalShareQuantity += trade.getShareQuantity();
+        }
+        if(totalShareQuantity > 0) {
+            accumulatedSharePrice = accumulatedSharePrice.divide(BigDecimal.valueOf(totalShareQuantity), ROUND_HALF_DOWN);
             return accumulatedSharePrice;
         }
         return BigDecimal.ZERO;
