@@ -61,5 +61,4 @@ public class PreferredStockTest {
         exception.expect(IllegalArgumentException.class);
         stock.getPERatio(null);
     }
-
 }
